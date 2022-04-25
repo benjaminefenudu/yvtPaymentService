@@ -19,7 +19,7 @@ const container = createContainer({
 
 container.register({
   database: asValue(database),
-  messenger: asClass(Messenger),
+  messenger: asClass(Messenger, { lifetime: Lifetime.SINGLETON }),
   paymentModel: asValue(PaymentModel),
   paymentRepository: asClass(PaymentRepository),
   createPayment: asClass(CreatePayment),

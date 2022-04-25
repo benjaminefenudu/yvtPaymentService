@@ -4,30 +4,25 @@ import PaymentRepository from '../../../infra/repository/payment.repository';
 
 class PaymentController {
   createPayment: CreatePayment;
-  paymentRepository: PaymentRepository;
 
-  constructor({
-    createPayment,
-    paymentRepository,
-  }: {
-    createPayment: CreatePayment;
-    paymentRepository: PaymentRepository;
-  }) {
+  constructor({ createPayment }: { createPayment: CreatePayment }) {
     this.createPayment = createPayment;
-    this.paymentRepository = paymentRepository;
   }
 
   async create(req: Request, res: Response) {
     try {
       const payload = req.body.order;
-      const paymentSuccess = await this.createPayment.execute(payload);
+      const payment = await this.createPayment.execute(payload);
 
-      if (paymentSuccess) {
-        payload.orderStatus = 'complete';
-        const payment = await this.paymentRepository.create(payload);
-        await payment.save();
+      if (!payment) {
+        return res.status(400).json({
+          success: false,
+          msg: `Insufficient funds`,
+        });
+      }
 
-        res.status(201).json({
+      if (payment) {
+        return res.status(201).json({
           success: true,
           msg: `Payment successful`,
           payment: payment,

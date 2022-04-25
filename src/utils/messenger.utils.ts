@@ -1,6 +1,6 @@
 import amqp, { Channel, Connection, Message } from 'amqplib';
-// import { Status } from "../../domain/order";
-// import OrderUseCase from "../../usecases/OrderUseCase";
+import dotenv from 'dotenv';
+dotenv.config();
 
 export interface IMessenger {
   createChannel(): Promise<void>;

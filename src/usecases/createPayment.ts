@@ -1,17 +1,21 @@
 import axios from 'axios';
 import PaymentModel from '../infra/database/models/mongoose/payment.model';
+import PaymentRepository from '../infra/repository/payment.repository';
 import { PaymentDocument } from '../infra/database/models/mongoose/payment.model';
 
 class CreatePayment {
   paymentModel: typeof PaymentModel;
+  paymentRepository: PaymentRepository;
 
   constructor({
     paymentModel,
+    paymentRepository,
   }: {
     paymentModel: typeof PaymentModel;
-
+    paymentRepository: PaymentRepository;
   }) {
     this.paymentModel = paymentModel;
+    this.paymentRepository = paymentRepository;
   }
 
   async execute(payload: PaymentDocument) {
@@ -24,10 +28,13 @@ class CreatePayment {
         })
         .then(async (response) => {
           if (response.data.success) {
-            return true;
+            payload.orderStatus = 'complete';
+            const payment = await this.paymentRepository.create(payload);
+
+            return  payment;
           } else {
             console.log('Insufficient funds');
-            return false;
+            return;
           }
         })
         .catch((error) => {
