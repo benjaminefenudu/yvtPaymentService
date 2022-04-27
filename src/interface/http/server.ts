@@ -7,7 +7,7 @@ import container from '../../../di-setup';
 const { database, messenger } = container.cradle;
 
 database();
-messenger.createChannel();
+messenger.createChannel()
 
 const PORT = process.env.PORT || 4003
 

@@ -26,7 +26,7 @@ class PaymentRepository {
       if (!payment) return;
       
       // send transaction details to RabbitMQ queue
-      this.messenger.sendToQueue(`transaction_details`, {
+      this.messenger.sendToQueue(`save_transaction_details`, {
         payment,
       });
 
