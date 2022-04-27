@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import CreatePayment from '../../../usecases/createPayment';
+import CreatePayment from '../../../usecases/makePayment';
 import PaymentRepository from '../../../infra/repository/payment.repository';
 
 class PaymentController {

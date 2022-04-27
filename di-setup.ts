@@ -10,7 +10,7 @@ import database from './src/infra/database/mongoose';
 import Messenger from './src/utils/messenger.utils';
 import PaymentModel from './src/infra/database/models/mongoose/payment.model';
 import PaymentRepository from './src/infra/repository/payment.repository';
-import CreatePayment from './src/usecases/createPayment';
+import CreatePayment from './src/usecases/makePayment';
 import PaymentController from './src/interface/http/controllers/payment.controller';
 
 const container = createContainer({
